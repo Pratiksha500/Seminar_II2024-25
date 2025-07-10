@@ -1,0 +1,232 @@
+<!-- Name: Ghatol Pratiksha Prabhakar
+Class: SY(CSE)-A
+Roll No: 105 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      padding: 30px;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #ffffffee;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      margin: 30px auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 15px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #4a90e2;
+      background-color: #fff;
+      outline: none;
+      box-shadow: 0 0 4px #4a90e288;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #3498db;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #2980b9;
+    }
+
+    .table-container {
+      max-width: 800px;
+      margin: 30px auto 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f0faff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Employee Details Form</h2>
+    <form onsubmit="return validateForm()">
+      <label for="name">Name</label>
+      <input type="text" id="name">
+      <div class="error" id="nameError"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email">
+      <div class="error" id="emailError"></div>
+
+      <label for="mobile">Mobile Number</label>
+      <input type="text" id="mobile">
+      <div class="error" id="mobileError"></div>
+
+      <label for="address">Address</label>
+      <input type="text" id="address">
+      <div class="error" id="addressError"></div>
+
+      <label for="salary">Salary</label>
+      <input type="number" id="salary">
+      <div class="error" id="salaryError"></div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <table id="employeeTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Salary</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      document.getElementById("nameError").innerText = "";
+      document.getElementById("emailError").innerText = "";
+      document.getElementById("mobileError").innerText = "";
+      document.getElementById("addressError").innerText = "";
+      document.getElementById("salaryError").innerText = "";
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const salary = document.getElementById("salary").value.trim();
+
+      const nameRegex = /^[A-Za-z\s]+$/;
+      if (name === "" || !nameRegex.test(name)) {
+        document.getElementById("nameError").innerText = "Please enter a valid name.";
+        isValid = false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email === "" || !emailRegex.test(email)) {
+        document.getElementById("emailError").innerText = "Please enter a valid email.";
+        isValid = false;
+      }
+
+      const mobileRegex = /^\d{10}$/;
+      if (mobile === "" || !mobileRegex.test(mobile)) {
+        document.getElementById("mobileError").innerText = "Enter a valid 10-digit mobile number.";
+        isValid = false;
+      }
+
+      if (address === "") {
+        document.getElementById("addressError").innerText = "Address cannot be empty.";
+        isValid = false;
+      }
+
+      if (salary === "" || isNaN(salary) || Number(salary) <= 0) {
+        document.getElementById("salaryError").innerText = "Enter a valid positive salary.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        addToTable(name, email, mobile, address, salary);
+        document.querySelector("form").reset();
+      }
+
+      return false;
+    }
+
+    function addToTable(name, email, mobile, address, salary) {
+      const table = document.getElementById("employeeTable");
+      const tbody = table.querySelector("tbody");
+
+      const newRow = tbody.insertRow();
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${email}</td>
+        <td>${mobile}</td>
+        <td>${address}</td>
+        <td>${salary}</td>
+      `;
+
+      table.style.display = "table";
+    }
+  </script>
+
+</body>
+</html>
