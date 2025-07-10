@@ -1,0 +1,131 @@
+<!-- Name: Ghatol Pratiksha Prabhakar
+Class: SY(CSE)-A
+Roll No: 105 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prime Number Finder</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fceabb, #f8b500); /* Soft yellow gradient */
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      background-color: #fffdf7;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e68900;
+    }
+
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff8e1;
+      border: 1px dashed #ff9800;
+      border-radius: 8px;
+      font-size: 16px;
+      min-height: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Prime Number Finder</h2>
+
+    <label for="start">Enter starting number:</label>
+    <input type="number" id="start">
+
+    <label for="end">Enter ending number:</label>
+    <input type="number" id="end">
+
+    <button onclick="findPrimes()">Find Prime Numbers</button>
+
+    <div class="output" id="result"></div>
+  </div>
+
+  <script>
+    function isPrime(n) {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    function findPrimes() {
+      const start = parseInt(document.getElementById("start").value);
+      const end = parseInt(document.getElementById("end").value);
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(start) || isNaN(end)) {
+        resultDiv.innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      if (start > end) {
+        resultDiv.innerText = "Starting number should be less than or equal to ending number.";
+        return;
+      }
+
+      let primes = [];
+      for (let i = start; i <= end; i++) {
+        if (isPrime(i)) {
+          primes.push(i);
+        }
+      }
+
+      resultDiv.innerText = primes.length > 0 
+        ? `Prime numbers between ${start} and ${end}:\n${primes.join(', ')}`
+        : `No prime numbers found in this range.`;
+    }
+  </script>
+
+</body>
+</html>
