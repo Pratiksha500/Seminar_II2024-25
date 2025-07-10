@@ -1,0 +1,135 @@
+<!-- Name: Ghatol Pratiksha Prabhakar
+Class: SY(CSE)-A
+Roll No: 105 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Search</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function searchStudent() {
+      const name = document.getElementById('searchBox').value;
+
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function() {
+        document.getElementById('result').innerHTML = this.responseText;
+      };
+      xhttp.open("GET", "search.php?name=" + name, true);
+      xhttp.send();
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Search Student by Name</h2>
+    <input type="text" id="searchBox" placeholder="Enter student name">
+    <button onclick="searchStudent()">Search</button>
+    <div id="result"></div>
+  </div>
+</body>
+</html>
+
+
+<?php
+$connection = new mysqli("localhost", "root", "", "school");
+
+if ($connection->connect_error) {
+    die("Connection failed");
+}
+
+$name = $_GET['name'];
+
+$sql = "SELECT * FROM students WHERE name LIKE '%$name%'";
+$result = $connection->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table border='1' cellpadding='10'><tr><th>ID</th><th>Name</th><th>Roll No</th><th>Class</th></tr>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['id']}</td>
+                <td>{$row['name']}</td>
+                <td>{$row['roll_no']}</td>
+                <td>{$row['class']}</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No matching student found.";
+}
+
+$connection->close();
+?>
+
+
+body {
+  background: linear-gradient(135deg, #c3ecf5, #a0c1f1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  margin: 80px auto;
+  padding: 40px 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 12px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #023e8a;
+}
+
+#result {
+  margin-top: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background: #f6f9fc;
+}
+
+th {
+  background-color: #0077b6;
+  color: white;
+}
