@@ -1,0 +1,162 @@
+<!-- Name: Ghatol Pratiksha Prabhakar
+Class: SY(CSE)-A
+Roll No: 105 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Form with Table Output</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      margin-bottom: 40px;
+      transition: 0.3s ease;
+    }
+
+    .form-container:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      text-align: center;
+      color: #008080;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: #008080;
+      box-shadow: 0 0 5px rgba(0, 128, 128, 0.3);
+      outline: none;
+    }
+
+    button {
+      background: #008080;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 15px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #006666;
+    }
+
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #008080;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>User Information Form</h2>
+    <form id="infoForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Form data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('infoForm');
+    const tableBody = document.querySelector('#dataTable tbody');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent page refresh
+
+      // Get values
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const city = document.getElementById('city').value.trim();
+
+      // Create a new row
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${email}</td>
+        <td>${city}</td>
+      `;
+
+      // Append to table
+      tableBody.appendChild(newRow);
+
+      // Reset form
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
