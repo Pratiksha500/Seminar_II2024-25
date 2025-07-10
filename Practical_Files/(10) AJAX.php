@@ -1,3 +1,8 @@
+<!-- Name: Ghatol Pratiksha Prabhakar
+Class: SY(CSE)-A
+Roll No: 105 -->
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,3 +88,9 @@
   </div>
 </body>
 </html>
+
+
+<?php
+$name = $_GET["name"];
+echo "Hello, " . htmlspecialchars($name) . "! This response came from PHP using AJAX.";
+?>
